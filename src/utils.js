@@ -1,0 +1,1 @@
+export const getChannel = message => message.currentTarget.label;

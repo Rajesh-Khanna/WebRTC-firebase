@@ -1,0 +1,27 @@
+{
+    "name": "webrtc-firebase",
+    "version": "1.0.0",
+    "description": "wrapper over WebRTC with signaling based on firebase realtime database",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Rajesh-Khanna/WebRTC-firebase.git"
+    },
+    "keywords": [
+        "webRTC",
+        "firebase",
+        "signaling"
+    ],
+    "author": "Rajesh Khanna, Rohit Reddy",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Rajesh-Khanna/WebRTC-firebase/issues"
+    },
+    "homepage": "https://github.com/Rajesh-Khanna/WebRTC-firebase#readme",
+    "dependencies": {
+        "firebase": "^8.6.3"
+    }
+}
