@@ -29,7 +29,11 @@ export default class PubSub {
         }
 
         if (channel_name in this.bridgeChannels) {
-            dataChannel.onmessage = (message) => { this.publish(message) };
+            // dataChannel.onmessage = (message) => { this.publish(message) };
+            if (addBoardcastChannel in this.activityManager)
+                this.activityManager.addBoardcastChannel(channel_name, dataChannel);
+            else
+                dataChannel.onmessage = (message) => { this.publish(message) };
         } else {
             dataChannel.onmessage = (message) => { this.activityManager.handle(message) };
         }
