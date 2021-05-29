@@ -3,21 +3,17 @@ import Signal from './signal';
 import RTC from './webRTCHandler';
 
 // constants
-import { USER_TYPE, MESSAGE_TYPE } from '../constants';
+import { USER_TYPE, MESSAGE_TYPE } from './constants';
 
 class ChannelEndSim {
 
-    label;
-
-    onmessage;
-
-    pipe;
-
-    mod = false;
-
-    readyState = 'open';
-
     constructor(label, mod) {
+        this.mod = false;
+
+        this.readyState = 'open';
+
+        this.onmessage = null;
+        this.pipe = null;
         this.label = label;
         this.mod = mod;
     }
@@ -34,10 +30,6 @@ class ChannelEndSim {
 }
 
 class ChannelSim {
-
-    dc1;
-
-    intakeChannel;
 
     constructor(label) {
         this.dc1 = new ChannelEndSim(label, true);
@@ -56,17 +48,17 @@ class ChannelSim {
 
 export class RoomHost {
 
-    pubSub;
-
-    signal;
-
-    guests = {};
-
-    channels = {};
-
-    req_channels = [];
-
     constructor(onLobbyKey, firebaseConfig, req_channels, activityManager) {
+        this.pubSub;
+
+        this.signal;
+
+        this.guests = {};
+
+        this.channels = {};
+
+        this.req_channels = [];
+
         this.req_channels = req_channels;
         this.pubSub = new PubSub(activityManager, firebaseConfig, req_channels, null, onLobbyKey);
         this.simulatedChannels();
@@ -88,17 +80,14 @@ export class RoomHost {
 
 export class Host {
 
-    signal;
-
-    rtc;
-
-    channels = {};
-
-    req_channels = [];
-
-    guest;
-
     constructor(firebaseConfig, req_channels, onLobbyKey) {
+
+        this.signal;
+        this.rtc;
+        this.channels = {};
+        this.req_channels = [];
+        this.guest;
+
         this.signal = new Signal('host', firebaseConfig, null, onLobbyKey);
         this.signal.onMessage((message) => { this.incomingMessage(message) });
         this.req_channels = req_channels;
@@ -161,15 +150,13 @@ export class Host {
 
 export class Guest {
 
-    signal;
-
-    rtc;
-
-    channels = {};
-
-    req_channels = [];
 
     constructor(lobbyKey, firebaseConfig, req_channels, onConnection) {
+        this.signal;
+        this.rtc;
+        this.channels = {};
+        this.req_channels = [];
+
         this.signal = new Signal(USER_TYPE.GUEST, firebaseConfig, lobbyKey);
         this.req_channels = req_channels;
         this.onConnection = onConnection;
@@ -185,8 +172,8 @@ export class Guest {
     onChannel(channel) {
         console.log({ channel });
         this.channels[channel.label] = channel;
-        console.log(Object.keys(this.channels).length);
-        if (Object.keys(this.channels).length >= Object.values(this.req_channels).length) {
+        console.log(this.channels, Object.keys(this.channels).length);
+        if (Object.keys(this.channels).length >= Object.values(this.req_channels).length + 1) {
             this.onConnection()
         }
     }

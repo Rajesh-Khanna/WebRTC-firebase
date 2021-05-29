@@ -2,15 +2,12 @@ import { USER_TYPE, CONFIGURATION } from "./constants";
 
 export default class RTC {
 
-    onIce;
-
-    guestId;
-
-    rtc;
-
-    localDescription;
-
     constructor(userType, onIce, onChannel, onCandidate, guestId) {
+        this.onIce;
+        this.guestId;
+        this.rtc;
+        this.localDescription;
+
         this.onIce = onIce;
         this.guestId = guestId;
 

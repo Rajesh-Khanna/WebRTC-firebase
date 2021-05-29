@@ -5,15 +5,12 @@ import Signal from './signal';
 
 export default class PubSub {
 
-    channels = {};
-
-    bridgeChannels = [];
-
-    guests = {};
-
-    req_channels = [];
 
     constructor(activityManager, firebaseConfig, req_channels, bridgeChannels, onLobbyKey) {
+        this.channels = {};
+        this.bridgeChannels = [];
+        this.guests = {};
+        this.req_channels = [];
 
         this.signal = new Signal('host', firebaseConfig, null, onLobbyKey);
         this.signal.onMessage((message) => { this.incomingMessage(message) });

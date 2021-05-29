@@ -9,11 +9,11 @@ function callbackClosure(i, callback) {
 
 export default class Signal {
 
-    userType
-
-    name
 
     constructor(name, firebaseConfig, lobbyKey, onLobbyKey) {
+        this.userType;
+
+
         this.name = name;
 
         if (!firebase.apps.length) {
