@@ -172,7 +172,7 @@ export class Guest {
             if (Object.keys(this.channels).length < Object.values(this.req_channels).length + 1) {
                 onSessionStateChange('unknown')
             }
-        }, 30000);
+        }, 10000);
     }
 
     onChannel(channel) {
