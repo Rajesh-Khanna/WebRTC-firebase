@@ -1,6 +1,6 @@
 {
     "name": "webrtc-firebase",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "wrapper over WebRTC with signaling based on firebase realtime database",
     "main": "src/index.js",
     "scripts": {
