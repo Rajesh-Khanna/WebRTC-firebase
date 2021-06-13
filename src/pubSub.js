@@ -19,6 +19,7 @@ export default class PubSub {
         this.bridgeChannels = bridgeChannels || [];
         this.activityManager = activityManager;
         this.activityManager.publish = (message, channel) => { this.publish(message, channel) };
+        this.activityManager.signalEnd = () => {this.signalEnd()};
     }
 
     push(channel_name, dataChannel) {
