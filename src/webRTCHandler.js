@@ -2,11 +2,12 @@ import { USER_TYPE, CONFIGURATION } from "./constants";
 
 export default class RTC {
 
-    constructor(userType, onIce, onChannel, onCandidate, guestId) {
+    constructor(userType, onIce, onChannel, onCandidate, guestId, onSessionStateChange) {
         this.onIce;
         this.guestId;
         this.rtc;
         this.localDescription;
+        this.isOfferReceived = false;
 
         this.onIce = onIce;
         this.guestId = guestId;
@@ -34,6 +35,10 @@ export default class RTC {
 
             dataChannel.onopen = (e) => { console.log('onOpen call'); };
         } else {
+            this.rtc.addEventListener('connectionstatechange', event => {
+                console.log(this.rtc.connectionState, event);
+                onSessionStateChange(event, this.isOfferReceived);
+            });
             this.rtc.ondatachannel = e => {
                 window.dataChannel = e.channel;
                 console.log({ channel: e });
@@ -63,6 +68,7 @@ export default class RTC {
     }
 
     async setAndSendOffer(offer) {
+        this.isOfferReceived = true;
         console.log('setOffer', offer);
         console.log(JSON.stringify(offer));
         await this.rtc.setRemoteDescription(offer);

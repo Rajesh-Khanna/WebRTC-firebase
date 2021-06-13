@@ -151,7 +151,7 @@ export class Host {
 export class Guest {
 
 
-    constructor(lobbyKey, firebaseConfig, req_channels, onConnection) {
+    constructor(lobbyKey, firebaseConfig, req_channels, onConnection, onSessionStateChange) {
         this.signal;
         this.rtc;
         this.channels = {};
@@ -163,10 +163,16 @@ export class Guest {
         this.rtc = new RTC(USER_TYPE.GUEST, (answer, id) => {
                 this.signal.send('answer', answer);
             }, (channel) => { this.onChannel(channel); },
-            (candidate, guestId) => { this.signal.send('guest_candidate', candidate, guestId) }
+            (candidate, guestId) => { this.signal.send('guest_candidate', candidate, guestId) },
+            null, onSessionStateChange
         );
         this.signal.onCandidate((candidate) => { this.rtc.storeCandidate(candidate) });
         this.signal.onMessage((message) => { this.incomingMessage(message) });
+        setTimeout(() => {
+            if (Object.keys(this.channels).length < Object.values(this.req_channels).length + 1) {
+                onSessionStateChange('unknown')
+            }
+        }, 10000);
     }
 
     onChannel(channel) {
