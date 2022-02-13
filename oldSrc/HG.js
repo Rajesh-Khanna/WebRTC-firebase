@@ -1,6 +1,6 @@
 import PubSub from './pubSub';
-import Signal from './signal';
-import RTC from './webRTCHandler';
+import Signal from '../src/signal';
+import RTC from '../src/webRTCHandler';
 
 // constants
 import { USER_TYPE, MESSAGE_TYPE } from './constants';
